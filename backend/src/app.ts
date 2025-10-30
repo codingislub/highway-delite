@@ -1,3 +1,4 @@
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -12,7 +13,10 @@ dotenv.config();
 export async function createApp() {
   const app = express();
   app.use(express.json());
-  app.use(cors({ origin: process.env.CORS_ORIGIN?.split(',') || '*' }));
+  // Debug log for CORS_ORIGIN
+  console.log('CORS_ORIGIN:', process.env.CORS_ORIGIN);
+  // Hardcode CORS to '*' for troubleshooting
+  app.use(cors({ origin: '*' }));
 
   app.get('/', (_req, res) => res.json({ name: 'Highway API', version: '0.1.0' }));
   app.use('/health', healthRouter);
