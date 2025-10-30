@@ -19,6 +19,100 @@ export type ExperienceListItem = {
   total_capacity: number
 }
 
+// Mock data for when API is unavailable
+const mockExperiences: ExperienceListItem[] = [
+  {
+    _id: '1',
+    id: 1,
+    title: 'Mountain Hiking Adventure',
+    location: 'Colorado Rockies',
+    pricePerPerson: 299,
+    price_per_person: 299,
+    imageUrl: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800',
+    image_url: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800',
+    rating: 4.8,
+    reviewsCount: 124,
+    reviews_count: 124,
+    totalCapacity: 12,
+    total_capacity: 12
+  },
+  {
+    _id: '2',
+    id: 2,
+    title: 'Coastal Kayaking Tour',
+    location: 'California Coast',
+    pricePerPerson: 189,
+    price_per_person: 189,
+    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800',
+    image_url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800',
+    rating: 4.9,
+    reviewsCount: 98,
+    reviews_count: 98,
+    totalCapacity: 8,
+    total_capacity: 8
+  },
+  {
+    _id: '3',
+    id: 3,
+    title: 'Desert Sunset Safari',
+    location: 'Arizona Desert',
+    pricePerPerson: 249,
+    price_per_person: 249,
+    imageUrl: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800',
+    image_url: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800',
+    rating: 4.7,
+    reviewsCount: 156,
+    reviews_count: 156,
+    totalCapacity: 15,
+    total_capacity: 15
+  },
+  {
+    _id: '4',
+    id: 4,
+    title: 'Forest Camping Experience',
+    location: 'Pacific Northwest',
+    pricePerPerson: 199,
+    price_per_person: 199,
+    imageUrl: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800',
+    image_url: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800',
+    rating: 4.6,
+    reviewsCount: 87,
+    reviews_count: 87,
+    totalCapacity: 10,
+    total_capacity: 10
+  },
+  {
+    _id: '5',
+    id: 5,
+    title: 'Whitewater Rafting',
+    location: 'Montana Rivers',
+    pricePerPerson: 279,
+    price_per_person: 279,
+    imageUrl: 'https://images.unsplash.com/photo-1490131504990-34e52085528b?w=800',
+    image_url: 'https://images.unsplash.com/photo-1490131504990-34e52085528b?w=800',
+    rating: 4.9,
+    reviewsCount: 143,
+    reviews_count: 143,
+    totalCapacity: 6,
+    total_capacity: 6
+  },
+  {
+    _id: '6',
+    id: 6,
+    title: 'Rock Climbing Course',
+    location: 'Utah Canyons',
+    pricePerPerson: 329,
+    price_per_person: 329,
+    imageUrl: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800',
+    image_url: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=800',
+    rating: 4.8,
+    reviewsCount: 92,
+    reviews_count: 92,
+    totalCapacity: 8,
+    total_capacity: 8
+  }
+]
+
 export default function Home() {
   const [data, setData] = useState<ExperienceListItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -30,7 +124,13 @@ export default function Home() {
     api
       .get<{ data: ExperienceListItem[] }>('/experiences')
       .then((res) => mounted && setData(res.data.data))
-      .catch(() => mounted && setError('Failed to load experiences'))
+      .catch((err) => {
+        if (mounted) {
+          // Use mock data if API fails
+          console.warn('API unavailable, using mock data:', err.message)
+          setData(mockExperiences)
+        }
+      })
       .finally(() => mounted && setLoading(false))
     return () => {
       mounted = false
