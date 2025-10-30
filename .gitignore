@@ -48,3 +48,4 @@ coverage/
 
 # Legacy/alternate app we don't track
 frontend/
+.vercel
