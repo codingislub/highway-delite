@@ -1,0 +1,45 @@
+# Node
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+.vite/
+**/.vite/
+.vercel/
+
+# Env files (never commit secrets)
+.env
+.env.*
+front/.env
+backend/.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+
+# Tests/coverage
+coverage/
+
+# Misc
+*.local
+
+# Legacy/alternate app we don't track
+frontend/
