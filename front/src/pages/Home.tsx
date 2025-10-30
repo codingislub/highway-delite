@@ -121,13 +121,18 @@ export default function Home() {
 
   useEffect(() => {
     let mounted = true
+    console.log('API Base URL:', import.meta.env.VITE_API_URL || 'http://localhost:4000')
     api
       .get<{ data: ExperienceListItem[] }>('/experiences')
-      .then((res) => mounted && setData(res.data.data))
+      .then((res) => {
+        console.log('API Success:', res.data)
+        mounted && setData(res.data.data)
+      })
       .catch((err) => {
         if (mounted) {
           // Use mock data if API fails
-          console.warn('API unavailable, using mock data:', err.message)
+          console.error('API Error:', err.message, err.response?.status)
+          console.warn('Using mock data as fallback')
           setData(mockExperiences)
         }
       })
